@@ -216,7 +216,7 @@ if __name__ == "__main__":
         description="Benchmark the online serving throughput.")
     parser.add_argument("--backend", type=str, default="vllm",
                         choices=["vllm", "tgi"])
-    parser.add_argument("--host", type=str, default="localhost")
+    parser.add_argument("--host", type=str, default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8001)
     parser.add_argument("--dataset", type=str, required=True,
                         help="Path to the dataset.")

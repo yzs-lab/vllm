@@ -44,7 +44,7 @@ def initialize_cluster(
         port = random.randint(10000, 20000)
         # We need to setup the distributed init method to make sure
         # the distributed megatron code (e.g., get world size) works correctly.
-        distributed_init_method = f"tcp://localhost:{port}"
+        distributed_init_method = f"tcp://127.0.0.1:{port}"
         all_stage_devices = [[(0, None, 0)]]
         return distributed_init_method, all_stage_devices
 

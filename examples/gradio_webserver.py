@@ -4,6 +4,11 @@ import json
 import gradio as gr
 import requests
 
+def unset_proxy():
+    import os
+    for env_var in ["http_proxy", "https_proxy", "HTTP_PROXY", "HTTPS_PROXY"]:
+        if env_var in os.environ:
+            del os.environ[env_var]
 
 def http_bot(prompt):
     headers = {"User-Agent": "vLLM Client"}
@@ -34,12 +39,13 @@ def build_demo():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--host", type=str, default="localhost")
+    parser.add_argument("--host", type=str, default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8001)
-    parser.add_argument("--model-url", type=str, default="http://localhost:8000/generate")
+    parser.add_argument("--model-url", type=str, default="http://127.0.0.1:8000/generate")
     args = parser.parse_args()
+    unset_proxy()
 
     demo = build_demo()
     demo.queue(concurrency_count=100).launch(server_name=args.host,
                                              server_port=args.port,
-                                             share=True)
+                                             share=False)
